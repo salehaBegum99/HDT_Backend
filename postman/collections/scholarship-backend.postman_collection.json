@@ -1,0 +1,1267 @@
+{
+  "info": {
+    "_postman_id": "3353cdeb-d2f1-443b-9398-94d2cb981951",
+    "name": "Scholarship Backend API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Send OTP",
+          "id": "f84f3bb3-f214-4b70-a1d2-b480c3f41e80",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mobile\": \"9876543210\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/send-otp",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "send-otp"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify OTP",
+          "id": "0227217a-87f9-4199-ba74-dd53d9e39f1e",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mobile\": \"9876543210\",\n  \"otp\": \"123456\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/verify-otp",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "verify-otp"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Register Applicant",
+          "id": "19ba49a7-e3ea-45c6-b023-87590b1b94ff",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"mobile\": \"9876543210\",\n  \"password\": \"password123\",\n  \"aadhaar\": \"123456789012\",\n  \"dateOfBirth\": \"2005-01-15\",\n  \"gender\": \"Male\",\n  \"address\": \"123 Main St, City\",\n  \"schoolName\": \"ABC High School\",\n  \"className\": \"10th\",\n  \"parentName\": \"Jane Doe\",\n  \"parentMobile\": \"9876543211\",\n  \"annualIncome\": 150000\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "id": "f1a2c02b-4820-40e2-9728-67d05287f0d6",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mobile\": \"9876543210\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Refresh Token",
+          "id": "62d01f8c-45d3-4f4b-b9df-f539078b7a2b",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/refresh-token",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "refresh-token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Logout",
+          "id": "4495f378-0c76-44f2-9c7b-5488a4ea6723",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/logout",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "logout"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Test Auth",
+          "id": "955f0ada-8a24-483f-a8fc-4ff61eb0da16",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/test-auth",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "test-auth"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "fcae30bf-4b54-413d-8a6a-6934cd94fb0b"
+    },
+    {
+      "name": "Admin (SuperAdmin Only)",
+      "item": [
+        {
+          "name": "Create User",
+          "id": "89a8e1ab-69e6-4de3-a369-9dbc1b0e9a4a",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Inspector Ali\",\n  \"email\": \"ali@example.com\",\n  \"mobile\": \"9000000001\",\n  \"role\": \"INSPECTOR\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/create-user",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "create-user"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Deactivate User",
+          "id": "270ace09-58f9-4398-be02-d8fa3d2d1676",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/deactivate-user/:userId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "deactivate-user",
+                ":userId"
+              ],
+              "variable": [
+                {
+                  "key": "userId",
+                  "value": "{{userId}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Users",
+          "id": "f6ac0a4a-3f65-4a14-b0ca-45f8ec1a83ad",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/users",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "users"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "dde0525b-c451-4caa-a92d-2f650ff35182"
+    },
+    {
+      "name": "Applications",
+      "item": [
+        {
+          "name": "Submit Application",
+          "id": "bd98e33c-c866-4127-943f-44d1a06245be",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"academic\": {\n    \"schoolName\": \"ABC High School\",\n    \"className\": \"10th\",\n    \"percentage\": 85\n  },\n  \"family\": {\n    \"parentName\": \"Jane Doe\",\n    \"annualIncome\": 150000,\n    \"occupation\": \"Farmer\"\n  },\n  \"bank\": {\n    \"accountNumber\": \"1234567890\",\n    \"ifscCode\": \"SBIN0001234\",\n    \"bankName\": \"SBI\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/applications/submit",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "applications",
+                "submit"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get My Application",
+          "id": "267fff18-e6ca-4102-9658-41f5db34ec4e",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/applications/my-application",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "applications",
+                "my-application"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Applications",
+          "id": "cb0582b5-1cde-4a43-8870-bb5761738731",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/applications/all?status=&assignedInspector=&startDate=&endDate=",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "applications",
+                "all"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": ""
+                },
+                {
+                  "key": "assignedInspector",
+                  "value": ""
+                },
+                {
+                  "key": "startDate",
+                  "value": ""
+                },
+                {
+                  "key": "endDate",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Single Application",
+          "id": "cfa60732-ef3a-4ef2-9db6-688192a42dd5",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/applications/:applicationId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "applications",
+                ":applicationId"
+              ],
+              "variable": [
+                {
+                  "key": "applicationId",
+                  "value": "{{applicationId}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Application Status",
+          "id": "2bd32e77-5079-440b-b5d2-eb7037459a49",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"APPROVED\",\n  \"rejectionReason\": \"\",\n  \"hoNotes\": \"Looks good\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/applications/:applicationId/status",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "applications",
+                ":applicationId",
+                "status"
+              ],
+              "variable": [
+                {
+                  "key": "applicationId",
+                  "value": "{{applicationId}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Assign Inspector",
+          "id": "bf501be3-1fc7-4542-8c1c-3eed5e052bc7",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"inspectorId\": \"{{inspectorId}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/applications/:applicationId/assign-inspector",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "applications",
+                ":applicationId",
+                "assign-inspector"
+              ],
+              "variable": [
+                {
+                  "key": "applicationId",
+                  "value": "{{applicationId}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Assign Supervisor",
+          "id": "d96a32ac-5ce8-44e7-a172-77d6f2d7b523",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"supervisorId\": \"{{supervisorId}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/applications/:applicationId/assign-supervisor",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "applications",
+                ":applicationId",
+                "assign-supervisor"
+              ],
+              "variable": [
+                {
+                  "key": "applicationId",
+                  "value": "{{applicationId}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Flag Application",
+          "id": "e5da5b8f-142f-4031-a117-f10729301529",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/applications/:applicationId/flag",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "applications",
+                ":applicationId",
+                "flag"
+              ],
+              "variable": [
+                {
+                  "key": "applicationId",
+                  "value": "{{applicationId}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "3266ca6b-52e2-45da-a4ec-6b3d611368b6"
+    },
+    {
+      "name": "HO (Head Office)",
+      "item": [
+        {
+          "name": "Get Dashboard Stats",
+          "id": "d67bc1c7-8b2c-4c7b-8591-a4a165c4ac52",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/ho/dashboard",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "ho",
+                "dashboard"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Search Applications",
+          "id": "cbcd6299-d00a-4540-b74f-f5dea2b0bdae",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/ho/search?query=John",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "ho",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "query",
+                  "value": "John"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Visit Report (HO)",
+          "id": "fe509603-0c79-4ef6-9b6e-e3d0afbd4aa9",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/ho/:applicationId/visit-report",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "ho",
+                ":applicationId",
+                "visit-report"
+              ],
+              "variable": [
+                {
+                  "key": "applicationId",
+                  "value": "{{applicationId}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Disbursement Records",
+          "id": "3557b929-adeb-49ce-8455-8b951744fe90",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/ho/:applicationId/disbursements",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "ho",
+                ":applicationId",
+                "disbursements"
+              ],
+              "variable": [
+                {
+                  "key": "applicationId",
+                  "value": "{{applicationId}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add HO Notes",
+          "id": "765906a6-7845-4fa0-a78c-c9ab8e476997",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"notes\": \"Application looks promising\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/ho/:applicationId/notes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "ho",
+                ":applicationId",
+                "notes"
+              ],
+              "variable": [
+                {
+                  "key": "applicationId",
+                  "value": "{{applicationId}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Trigger Tranche Release",
+          "id": "9bce5bdc-9551-46e7-86f4-91ecabf1a29c",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"totalTranches\": 4,\n  \"approvedAmount\": 40000\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/ho/:applicationId/trigger-tranche",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "ho",
+                ":applicationId",
+                "trigger-tranche"
+              ],
+              "variable": [
+                {
+                  "key": "applicationId",
+                  "value": "{{applicationId}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Pause Tranche Release",
+          "id": "6cfe10f1-8b37-4398-86b1-48ad9c08f6b6",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Pending document verification\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/ho/:applicationId/pause-tranche",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "ho",
+                ":applicationId",
+                "pause-tranche"
+              ],
+              "variable": [
+                {
+                  "key": "applicationId",
+                  "value": "{{applicationId}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Reassign Inspector",
+          "id": "bcb9154c-82fe-4583-aceb-3044072eefea",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"inspectorId\": \"{{inspectorId}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/ho/:applicationId/reassign-inspector",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "ho",
+                ":applicationId",
+                "reassign-inspector"
+              ],
+              "variable": [
+                {
+                  "key": "applicationId",
+                  "value": "{{applicationId}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Inspectors",
+          "id": "06117f24-1d21-47bb-8dab-4640d2247139",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/ho/inspectors/list",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "ho",
+                "inspectors",
+                "list"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Supervisors",
+          "id": "c1f61407-a49e-497b-9ffd-0078f74be7af",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/ho/supervisors/list",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "ho",
+                "supervisors",
+                "list"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "eaab522e-0f47-4176-94d2-985dc98bbcfc"
+    },
+    {
+      "name": "Inspector",
+      "item": [
+        {
+          "name": "Get Assigned Applications",
+          "id": "640c6d16-add5-4a5b-a8fb-2634169865f5",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/inspector/my-applications?pendingOnly=true",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "inspector",
+                "my-applications"
+              ],
+              "query": [
+                {
+                  "key": "pendingOnly",
+                  "value": "true"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Submit Visit Report",
+          "id": "a00d3b57-2d6e-4cc0-bd98-924430d0f8db",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"visitDate\": \"2025-03-01\",\n  \"comments\": \"Visited the applicant's home. Details verified.\",\n  \"isVerified\": true,\n  \"rejectionReason\": \"\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/inspector/:applicationId/visit-report",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "inspector",
+                ":applicationId",
+                "visit-report"
+              ],
+              "variable": [
+                {
+                  "key": "applicationId",
+                  "value": "{{applicationId}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Visit History",
+          "id": "01755e0f-37bf-4db8-a061-18bbdca4e5bb",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/inspector/visit-history",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "inspector",
+                "visit-history"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Request More Documents",
+          "id": "158e9b07-4787-4211-9b74-64c6ade55a4a",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"requiredDocuments\": [\"Income Certificate\", \"School Marksheet\"],\n  \"deadline\": \"2025-03-15\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/inspector/:applicationId/request-documents",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "inspector",
+                ":applicationId",
+                "request-documents"
+              ],
+              "variable": [
+                {
+                  "key": "applicationId",
+                  "value": "{{applicationId}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "521e5e08-1ced-40e4-9a2a-19e092791727"
+    },
+    {
+      "name": "Supervisor",
+      "item": [
+        {
+          "name": "Get Assigned Applications (Supervisor)",
+          "id": "307fa3d3-ac59-44ff-9437-5bb371ca0ccd",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/supervisor/my-applications",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "supervisor",
+                "my-applications"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Visit Report (Supervisor)",
+          "id": "24858f16-4c7c-41e3-b4be-b88226b2b999",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/supervisor/:applicationId/visit-report",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "supervisor",
+                ":applicationId",
+                "visit-report"
+              ],
+              "variable": [
+                {
+                  "key": "applicationId",
+                  "value": "{{applicationId}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Disburse Tranche",
+          "id": "8651d1d7-c102-4644-bb94-a9f3497a829f",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 10000,\n  \"disbursedDate\": \"2025-03-01\",\n  \"transactionReference\": \"TXN123456\",\n  \"comments\": \"First tranche disbursed\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/supervisor/:applicationId/disburse",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "supervisor",
+                ":applicationId",
+                "disburse"
+              ],
+              "variable": [
+                {
+                  "key": "applicationId",
+                  "value": "{{applicationId}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Tranche History",
+          "id": "7c52b5b3-bd34-4ec5-ba6c-5c6a90a841be",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/supervisor/:applicationId/tranches",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "supervisor",
+                ":applicationId",
+                "tranches"
+              ],
+              "variable": [
+                {
+                  "key": "applicationId",
+                  "value": "{{applicationId}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add Supervisor Comments",
+          "id": "15c6263d-e32e-4146-9764-5227496526f0",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"comments\": \"Applicant is eligible for next tranche\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/supervisor/:applicationId/comments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "supervisor",
+                ":applicationId",
+                "comments"
+              ],
+              "variable": [
+                {
+                  "key": "applicationId",
+                  "value": "{{applicationId}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Request Follow-Up Visit",
+          "id": "690ff5d2-7481-469f-b6c5-e2311fd9a4b0",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/supervisor/:applicationId/follow-up",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "supervisor",
+                ":applicationId",
+                "follow-up"
+              ],
+              "variable": [
+                {
+                  "key": "applicationId",
+                  "value": "{{applicationId}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Flag Payment Issue",
+          "id": "046388cb-dcb7-4e33-87b8-35103589c1de",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"flagReason\": \"Incorrect bank account details\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/supervisor/tranche/:trancheId/flag",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "supervisor",
+                "tranche",
+                ":trancheId",
+                "flag"
+              ],
+              "variable": [
+                {
+                  "key": "trancheId",
+                  "value": "{{trancheId}}"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Tranches Dashboard",
+          "id": "8abfc193-5b5f-4317-99cb-ad163fd87be8",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/supervisor/dashboard",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "supervisor",
+                "dashboard"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "id": "858c019c-733f-4704-b5db-d11687b56eeb"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{accessToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "id": "3ac819b5-e35e-4f53-a154-73d0b27cfeb9",
+      "key": "baseUrl",
+      "value": "http://localhost:5000"
+    },
+    {
+      "id": "6c16f97d-e3b9-42f5-b605-551ee99d098a",
+      "key": "accessToken",
+      "value": ""
+    },
+    {
+      "id": "7323175c-56f3-4567-9b88-be432c9ba1f5",
+      "key": "refreshToken",
+      "value": ""
+    },
+    {
+      "id": "d14889c9-8420-4455-a1cb-5bdbb765a6d9",
+      "key": "applicationId",
+      "value": ""
+    },
+    {
+      "id": "2514eb0f-2175-4223-b553-abcc1dccb5c7",
+      "key": "userId",
+      "value": ""
+    },
+    {
+      "id": "3c2fc5ca-0b38-4f58-a428-5e1cc6cf1536",
+      "key": "inspectorId",
+      "value": ""
+    },
+    {
+      "id": "83dbe0f4-3d63-4a5c-9098-3215d7e65472",
+      "key": "supervisorId",
+      "value": ""
+    },
+    {
+      "id": "719306b3-2f17-402b-8936-00af006d7c3c",
+      "key": "trancheId",
+      "value": ""
+    }
+  ]
+}

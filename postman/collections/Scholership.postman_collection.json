@@ -1,0 +1,1740 @@
+{
+  "info": {
+    "_postman_id": "b951f437-237c-421c-8438-f50a21ea0d20",
+    "name": "Scholership",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Send-OTP",
+      "id": "65bb0fda-96b8-4154-864c-258c575fef5d",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"mobile\": \"9959628908\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/auth/send-otp",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "auth",
+            "send-otp"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "verify-otp",
+      "id": "5d42790e-3299-454c-b72e-f97fbc7c28dd",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"mobile\": \"9959628908\",\r\n  \"otp\": \"142285\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/auth/verify-otp",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "auth",
+            "verify-otp"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Applicant registration",
+      "id": "7ef9b228-45fc-43d0-8b6e-66d2c3ed1f3f",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Shoeb Khan\",\r\n  \"email\": \"shoeb@gmail.com\",\r\n  \"mobile\": \"9959628908\",\r\n  \"password\": \"Test@1234\",\r\n  \"aadhaar\": \"123456789012\",\r\n  \"dateOfBirth\": \"2005-06-15\",\r\n  \"gender\": \"MALE\",\r\n  \"address\": {\r\n    \"street\": \"123 Main St\",\r\n    \"city\": \"Hyderabad\",\r\n    \"state\": \"Telangana\",\r\n    \"pincode\": \"500001\"\r\n  },\r\n  \"schoolName\": \"ABC High School\",\r\n  \"className\": \"10th\",\r\n  \"parentName\": \"Khan Sahab\",\r\n  \"parentMobile\": \"9876543210\",\r\n  \"annualIncome\": 150000\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/auth/register",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "auth",
+            "register"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login Test",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "b5205f5a-f39b-486b-a9b6-eb705a2465c9",
+            "exec": [
+              "pm.environment.set(\"refreshToken\", pm.response.json().refreshToken);\r",
+              "pm.environment.set(\"accessToken\", pm.response.json().accessToken);"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "id": "acd07ae5-fe46-4530-af1a-b688d74499e5",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"mobile\": \"9959628908\",\r\n  \"password\": \"Test@1234\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/auth/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Logout test",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "3faec702-28e2-4a14-a83b-8e1098ed04f4",
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "id": "d2abf316-327a-4946-a34d-85bd3df5af1b",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n   \"refreshToken\": \"{{eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTlmNGNlNTFlMzRiZjA2MzI3OGYyZDQiLCJpYXQiOjE3NzIwOTk1NTIsImV4cCI6MTc3NDY5MTU1Mn0.c1H5QTAM6XxB_B2B16ywzlaZQekNQYLQ--5MgMRdnd0}}\"\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/auth/logout",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "auth",
+            "logout"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "test-auth",
+      "id": "b94d7147-8856-4342-a0b9-76c9aa92b0b2",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTlmNGNlNTFlMzRiZjA2MzI3OGYyZDQiLCJyb2xlIjoiQVBQTElDQU5UIiwiaWF0IjoxNzcyMTA2MTQzLCJleHAiOjE3NzIxMDcwNDN9.Mt4SDemPn5ON-ROAZlg1uxIa6JLu8oo310FPs3nva4w",
+            "description": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTlmNGNlNTFlMzRiZjA2MzI3OGYyZDQiLCJyb2xlIjoiQVBQTElDQU5UIiwiaWF0IjoxNzcyMTA2MTQzLCJleHAiOjE3NzIxMDcwNDN9.Mt4SDemPn5ON-ROAZlg1uxIa6JLu8oo310FPs3nva4w",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:5000/api/auth/test-auth?Authorization",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "auth",
+            "test-auth"
+          ],
+          "query": [
+            {
+              "key": "Authorization",
+              "value": null
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login as SuperAdmin",
+      "id": "6017bcb2-f1a1-4f98-a2d1-90114d7d3989",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"email\": \"superadmin@scholarship.com\",\r\n  \"password\": \"Test@1234\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/auth/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login as  Inspector",
+      "id": "a6829e59-13d9-486f-b73d-276925ff5532",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"email\": \"Saleha@scholarship.com\",\r\n  \"password\": \"Saleha@7041\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/auth/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login as  SuperVisor",
+      "id": "3a2c08c2-1d72-4ef5-b490-cf82ef666eff",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"email\": \"Kashaf@scholarship.com\",\r\n  \"password\": \"Kashaf@1226\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/auth/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Login as HO",
+      "id": "dc57de9e-f215-4d8c-8cc8-6e56d2184c4b",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"email\": \"juveriya@scholarship.com\",\r\n  \"password\": \"Juveriya@6659\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/auth/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Inspector using SuperAdmin",
+      "id": "4e407554-532e-460a-88a1-d813726486ac",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWEwNWYzZjY0Mzg3NDg4ZWY1MGViNjciLCJyb2xlIjoiU1VQRVJBRE1JTiIsImlhdCI6MTc3MjMwMjgxNiwiZXhwIjoxNzcyMzAzNzE2fQ.YE5pHEzrc0lntUERrUsq0OUZcbVrle5FMV3YQ4kLv1U",
+            "type": "text"
+          },
+          {
+            "key": "",
+            "value": "",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Saleha\",\r\n  \"email\": \"Saleha@scholarship.com\",\r\n  \"mobile\": \"923456789\",\r\n  \"role\": \"INSPECTOR\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/admin/create-user",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "admin",
+            "create-user"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create SuperVisor using SuperAdmin Copy",
+      "id": "ddd20cd0-e7da-4d21-88a6-46286ab41598",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWEwNWYzZjY0Mzg3NDg4ZWY1MGViNjciLCJyb2xlIjoiU1VQRVJBRE1JTiIsImlhdCI6MTc3MjQ4MjQ5NiwiZXhwIjoxNzcyNDgzMzk2fQ.Kjj0oAd6MEl_qV9qnhf0bbbLXaQSlMwz3zYePQkMzDA",
+            "type": "text"
+          },
+          {
+            "key": "",
+            "value": "",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Kashaf\",\r\n  \"email\": \"Kashaf@scholarship.com\",\r\n  \"mobile\": \"923456738\",\r\n  \"role\": \"SUPERVISOR\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/admin/create-user",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "admin",
+            "create-user"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create HO using SuperAdmin Copy",
+      "id": "cb16e2d0-5871-484c-aa33-4eac63358c6e",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWEwNWYzZjY0Mzg3NDg4ZWY1MGViNjciLCJyb2xlIjoiU1VQRVJBRE1JTiIsImlhdCI6MTc3MjMwMzg4OSwiZXhwIjoxNzcyMzA0Nzg5fQ.6GZh-dcwkv-wstE1x6WnhMBrYcBd9N6LI8E0ADe-7fM",
+            "type": "text"
+          },
+          {
+            "key": "",
+            "value": "",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"name\": \"Juveriya HO\",\r\n  \"email\": \"juveriya@scholarship.com\",\r\n  \"mobile\": \"9784839389\",\r\n  \"role\": \"HO\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/admin/create-user",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "admin",
+            "create-user"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "All users with superAdmin Access Token",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "c56ab5cc-389b-4a18-b7c8-354a0bec5ef9",
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "id": "b190328d-9dcf-4aaa-9cc9-fb8cb27f10f9",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWEwNWYzZjY0Mzg3NDg4ZWY1MGViNjciLCJyb2xlIjoiU1VQRVJBRE1JTiIsImlhdCI6MTc3MjExOTczNywiZXhwIjoxNzcyMTIwNjM3fQ.Ogbn3tLARvvOmKwk1wN6rANxHjwVdLx3woZKEtMNZ1g",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:5000/api/admin/users",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "admin",
+            "users"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Submit Application as Applicant",
+      "id": "4455e9ac-66e0-4858-80ec-fdb516e4d2ea",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OTlmNGNlNTFlMzRiZjA2MzI3OGYyZDQiLCJyb2xlIjoiQVBQTElDQU5UIiwiaWF0IjoxNzcyMTM0OTI0LCJleHAiOjE3NzIxMzU4MjR9.kGYUCCZ-cUwKr6mEg6mogQrI_GGxU_LjVIFlVLjLcew",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"academic\": {\r\n    \"schoolName\": \"ABC High School\",\r\n    \"className\": \"10th\",\r\n    \"percentage\": 85,\r\n    \"boardName\": \"CBSE\"\r\n  },\r\n  \"family\": {\r\n    \"parentName\": \"Khan Sahab\",\r\n    \"parentOccupation\": \"Farmer\",\r\n    \"annualIncome\": 150000,\r\n    \"totalMembers\": 5\r\n  },\r\n  \"bank\": {\r\n    \"accountNumber\": \"1234567890\",\r\n    \"ifscCode\": \"SBIN0001234\",\r\n    \"bankName\": \"State Bank of India\",\r\n    \"accountHolderName\": \"Shoeb Khan\"\r\n  }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/applications/submit",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "applications",
+            "submit"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Assigned Applications (as Inspector)",
+      "id": "f680a3d2-7065-45ac-a897-7bb03332b67b",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWEzMzI5MzUxYzY3MGZlZjY5NzU5ZTUiLCJyb2xlIjoiSU5TUEVDVE9SIiwiaWF0IjoxNzcyMzg2ODk0LCJleHAiOjE3NzIzODc3OTR9.nyXt-Mp6s7fTCZvk_6Uj44Lq0NGMYg0BnLd1s2XEpFI",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/inspector/my-applications?pendingOnly=true",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "inspector",
+            "my-applications"
+          ],
+          "query": [
+            {
+              "key": "pendingOnly",
+              "value": "true"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Submit Visit Report",
+      "id": "89271e5f-df30-498c-b150-a6f1dcaaf444",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWEzMzI5MzUxYzY3MGZlZjY5NzU5ZTUiLCJyb2xlIjoiSU5TUEVDVE9SIiwiaWF0IjoxNzcyMzA1NTc0LCJleHAiOjE3NzIzMDY0NzR9.hQz1j12w-0nPsOpeipLVgheWwqp07jXyKgD6nzrSjj8",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:5000/api/inspector/my-applications?pendingOnly=true",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "inspector",
+            "my-applications"
+          ],
+          "query": [
+            {
+              "key": "pendingOnly",
+              "value": "true"
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "id": "7ac55ac9-7888-4483-8915-8f4bc7589dc1",
+          "name": "Submit Visit Report",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWEzMzI5MzUxYzY3MGZlZjY5NzU5ZTUiLCJyb2xlIjoiSU5TUEVDVE9SIiwiaWF0IjoxNzcyMzg3MjMxLCJleHAiOjE3NzIzODgxMzF9.HwjRC5HyCHDv47RtiJv5emFCtS2xlHscwFZDei-CSTA",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"visitDate\": \"2026-02-26\",\r\n  \"comments\": \"Visited the student's home. Family background verified. Student is genuine.\",\r\n  \"isVerified\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/inspector/:applicationId/visit-report",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "inspector",
+                ":applicationId",
+                "visit-report"
+              ],
+              "variable": [
+                {
+                  "key": "applicationId",
+                  "value": "69a0a239392548ddb34b5bd0"
+                }
+              ]
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "109"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"6d-xmQfuER7VDiD5XwZhfiCH0qW6CA\""
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 01 Mar 2026 17:48:53 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"message\": \"Visit report submitted successfully ✅\",\n    \"reportId\": \"69a47c0580ad5a4d06257aec\",\n    \"isVerified\": true\n}"
+        }
+      ]
+    },
+    {
+      "name": "Get Visit History",
+      "id": "2231dfeb-67c9-4a4c-9d25-fc674e8980d3",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWEzMzI5MzUxYzY3MGZlZjY5NzU5ZTUiLCJyb2xlIjoiSU5TUEVDVE9SIiwiaWF0IjoxNzcyMzg3NjQ2LCJleHAiOjE3NzIzODg1NDZ9.Acj5lZm_F3bO2BpDFZE2BQxxo5EU_KRXxlJWO2Agl1c",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:5000/api/inspector/visit-history",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "inspector",
+            "visit-history"
+          ]
+        }
+      },
+      "response": [
+        {
+          "id": "16215f06-d3e2-49e6-be5c-7c1bf694aaad",
+          "name": "Submit Visit Report",
+          "originalRequest": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWEzMzI5MzUxYzY3MGZlZjY5NzU5ZTUiLCJyb2xlIjoiSU5TUEVDVE9SIiwiaWF0IjoxNzcyMzg3MjMxLCJleHAiOjE3NzIzODgxMzF9.HwjRC5HyCHDv47RtiJv5emFCtS2xlHscwFZDei-CSTA",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"visitDate\": \"2026-02-26\",\r\n  \"comments\": \"Visited the student's home. Family background verified. Student is genuine.\",\r\n  \"isVerified\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/inspector/:applicationId/visit-report",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "inspector",
+                ":applicationId",
+                "visit-report"
+              ],
+              "variable": [
+                {
+                  "key": "applicationId",
+                  "value": "69a0a239392548ddb34b5bd0"
+                }
+              ]
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "109"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"6d-xmQfuER7VDiD5XwZhfiCH0qW6CA\""
+            },
+            {
+              "key": "Date",
+              "value": "Sun, 01 Mar 2026 17:48:53 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"message\": \"Visit report submitted successfully ✅\",\n    \"reportId\": \"69a47c0580ad5a4d06257aec\",\n    \"isVerified\": true\n}"
+        }
+      ]
+    },
+    {
+      "name": "Assign Inspector to Application [using HO]",
+      "id": "37edf10a-8045-4e2e-8217-80ee23dd5c34",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWEzMzY0OTUxYzY3MGZlZjY5NzU5ZjIiLCJyb2xlIjoiSE8iLCJpYXQiOjE3NzIzMDU0MTgsImV4cCI6MTc3MjMwNjMxOH0.Ok25Kprwg_HUMSul8wICh-i_d4RirM3isC0MmvHyk7E",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"inspectorId\": \"69a3329351c670fef69759e5\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/applications/:applicationId/assign-inspector",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "applications",
+            ":applicationId",
+            "assign-inspector"
+          ],
+          "variable": [
+            {
+              "key": "applicationId",
+              "value": "69a0a239392548ddb34b5bd0"
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "id": "6fd97ae9-c92d-4fca-b83a-c55fea072b7d",
+          "name": "Assign Inspector to Application [using HO]",
+          "originalRequest": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWEzMzY0OTUxYzY3MGZlZjY5NzU5ZjIiLCJyb2xlIjoiSE8iLCJpYXQiOjE3NzIzMDU0MTgsImV4cCI6MTc3MjMwNjMxOH0.Ok25Kprwg_HUMSul8wICh-i_d4RirM3isC0MmvHyk7E",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"inspectorId\": \"69a3329351c670fef69759e5\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/applications/:applicationId/assign-inspector",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "applications",
+                ":applicationId",
+                "assign-inspector"
+              ],
+              "variable": [
+                {
+                  "key": "applicationId",
+                  "value": "69a0a239392548ddb34b5bd0"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "139"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"8b-dDEbZoJfSZQFM3OYPXqQkBxGhsE\""
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 28 Feb 2026 19:04:24 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"message\": \"Inspector assigned successfully ✅\",\n    \"applicationId\": \"69a0a239392548ddb34b5bd0\",\n    \"assignedInspector\": \"69a3329351c670fef69759e5\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "HO approves Application",
+      "id": "436a191e-1eb2-456f-b2c8-cc578d5c9dff",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWEzMzY0OTUxYzY3MGZlZjY5NzU5ZjIiLCJyb2xlIjoiSE8iLCJpYXQiOjE3NzI0ODMxMDcsImV4cCI6MTc3MjQ4NDAwN30.Fby4GFA00J8TV6p7ACQNC-5VXHZ8koyANVviseL8XRM",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"status\": \"APPROVED\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/applications/:applicationId/status",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "applications",
+            ":applicationId",
+            "status"
+          ],
+          "variable": [
+            {
+              "key": "applicationId",
+              "value": "69a0a239392548ddb34b5bd0"
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "id": "a31966c3-ca5d-43c1-995f-6efeb6eda685",
+          "name": "Assign Inspector to Application [using HO]",
+          "originalRequest": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWEzMzY0OTUxYzY3MGZlZjY5NzU5ZjIiLCJyb2xlIjoiSE8iLCJpYXQiOjE3NzIzMDU0MTgsImV4cCI6MTc3MjMwNjMxOH0.Ok25Kprwg_HUMSul8wICh-i_d4RirM3isC0MmvHyk7E",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"inspectorId\": \"69a3329351c670fef69759e5\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/applications/:applicationId/assign-inspector",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "applications",
+                ":applicationId",
+                "assign-inspector"
+              ],
+              "variable": [
+                {
+                  "key": "applicationId",
+                  "value": "69a0a239392548ddb34b5bd0"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "139"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"8b-dDEbZoJfSZQFM3OYPXqQkBxGhsE\""
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 28 Feb 2026 19:04:24 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"message\": \"Inspector assigned successfully ✅\",\n    \"applicationId\": \"69a0a239392548ddb34b5bd0\",\n    \"assignedInspector\": \"69a3329351c670fef69759e5\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Assign Supervisor for Application [using HO]",
+      "id": "8fa264bd-06a1-47da-8d29-a0b96631c7b4",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWEzMzY0OTUxYzY3MGZlZjY5NzU5ZjIiLCJyb2xlIjoiSE8iLCJpYXQiOjE3NzI0ODMxNzEsImV4cCI6MTc3MjQ4NDA3MX0.nfOLiZeKUuQiUq2FJHWkVtJg0pY3UHkWUIvjMM0D0lA",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"supervisorId\": \"69a5efe6b311df32a5d0fad0\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/applications/:applicationId/assign-supervisor",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "applications",
+            ":applicationId",
+            "assign-supervisor"
+          ],
+          "variable": [
+            {
+              "key": "applicationId",
+              "value": "69a0a239392548ddb34b5bd0"
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "id": "f0a6160e-f23c-4e8d-a862-8c2544e75707",
+          "name": "Assign Inspector to Application [using HO]",
+          "originalRequest": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWEzMzY0OTUxYzY3MGZlZjY5NzU5ZjIiLCJyb2xlIjoiSE8iLCJpYXQiOjE3NzIzMDU0MTgsImV4cCI6MTc3MjMwNjMxOH0.Ok25Kprwg_HUMSul8wICh-i_d4RirM3isC0MmvHyk7E",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"inspectorId\": \"69a3329351c670fef69759e5\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/applications/:applicationId/assign-inspector",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "applications",
+                ":applicationId",
+                "assign-inspector"
+              ],
+              "variable": [
+                {
+                  "key": "applicationId",
+                  "value": "69a0a239392548ddb34b5bd0"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "139"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"8b-dDEbZoJfSZQFM3OYPXqQkBxGhsE\""
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 28 Feb 2026 19:04:24 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"message\": \"Inspector assigned successfully ✅\",\n    \"applicationId\": \"69a0a239392548ddb34b5bd0\",\n    \"assignedInspector\": \"69a3329351c670fef69759e5\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Flag Payment Issues(Supervisor Work)",
+      "id": "b3699a67-8b8a-4f4e-be5c-166d25bc3e94",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWE1ZWZlNmIzMTFkZjMyYTVkMGZhZDAiLCJyb2xlIjoiU1VQRVJWSVNPUiIsImlhdCI6MTc3MjQ4NjMwOSwiZXhwIjoxNzcyNDg3MjA5fQ.rY-knEfk6vtiMiyiOuSHPiXvOuiwrrcm67ncXE9An2U",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"flagReason\": \"Bank account details mismatch\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/supervisor/tranche/:trancheId/flag",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "supervisor",
+            "tranche",
+            ":trancheId",
+            "flag"
+          ],
+          "variable": [
+            {
+              "key": "trancheId",
+              "value": "69a5fc85b311df32a5d0faec"
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "id": "21de1887-550e-48f5-9a05-d7e673af9059",
+          "name": "Assign Inspector to Application [using HO]",
+          "originalRequest": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWEzMzY0OTUxYzY3MGZlZjY5NzU5ZjIiLCJyb2xlIjoiSE8iLCJpYXQiOjE3NzIzMDU0MTgsImV4cCI6MTc3MjMwNjMxOH0.Ok25Kprwg_HUMSul8wICh-i_d4RirM3isC0MmvHyk7E",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"inspectorId\": \"69a3329351c670fef69759e5\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/applications/:applicationId/assign-inspector",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "applications",
+                ":applicationId",
+                "assign-inspector"
+              ],
+              "variable": [
+                {
+                  "key": "applicationId",
+                  "value": "69a0a239392548ddb34b5bd0"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "139"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"8b-dDEbZoJfSZQFM3OYPXqQkBxGhsE\""
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 28 Feb 2026 19:04:24 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"message\": \"Inspector assigned successfully ✅\",\n    \"applicationId\": \"69a0a239392548ddb34b5bd0\",\n    \"assignedInspector\": \"69a3329351c670fef69759e5\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Trigger Tranche Release: As HO",
+      "id": "94239275-471f-4250-98e0-177dfc0a7f3b",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWEzMzY0OTUxYzY3MGZlZjY5NzU5ZjIiLCJyb2xlIjoiSE8iLCJpYXQiOjE3NzI1OTQwNzgsImV4cCI6MTc3MjU5NDk3OH0.2higGIyzcomzJiam6i7hhxo0jxJ--0jXb6pnJKbpTUY",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"totalTranches\": 3,\r\n  \"approvedAmount\": 75000\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/ho/:applicationId/trigger-tranche",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "ho",
+            ":applicationId",
+            "trigger-tranche"
+          ],
+          "variable": [
+            {
+              "key": "applicationId",
+              "value": "69a0a239392548ddb34b5bd0"
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "id": "6dc038a3-9107-47ad-bf1c-654911d3e50a",
+          "name": "Assign Inspector to Application [using HO]",
+          "originalRequest": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWEzMzY0OTUxYzY3MGZlZjY5NzU5ZjIiLCJyb2xlIjoiSE8iLCJpYXQiOjE3NzIzMDU0MTgsImV4cCI6MTc3MjMwNjMxOH0.Ok25Kprwg_HUMSul8wICh-i_d4RirM3isC0MmvHyk7E",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"inspectorId\": \"69a3329351c670fef69759e5\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5000/api/applications/:applicationId/assign-inspector",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5000",
+              "path": [
+                "api",
+                "applications",
+                ":applicationId",
+                "assign-inspector"
+              ],
+              "variable": [
+                {
+                  "key": "applicationId",
+                  "value": "69a0a239392548ddb34b5bd0"
+                }
+              ]
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": null,
+          "header": [
+            {
+              "key": "X-Powered-By",
+              "value": "Express"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Content-Length",
+              "value": "139"
+            },
+            {
+              "key": "ETag",
+              "value": "W/\"8b-dDEbZoJfSZQFM3OYPXqQkBxGhsE\""
+            },
+            {
+              "key": "Date",
+              "value": "Sat, 28 Feb 2026 19:04:24 GMT"
+            },
+            {
+              "key": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n    \"message\": \"Inspector assigned successfully ✅\",\n    \"applicationId\": \"69a0a239392548ddb34b5bd0\",\n    \"assignedInspector\": \"69a3329351c670fef69759e5\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Request More documents",
+      "id": "d58868fc-99ca-4e9a-a83f-02c517f8a107",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWEzMzI5MzUxYzY3MGZlZjY5NzU5ZTUiLCJyb2xlIjoiSU5TUEVDVE9SIiwiaWF0IjoxNzcyMzg3NjQ2LCJleHAiOjE3NzIzODg1NDZ9.Acj5lZm_F3bO2BpDFZE2BQxxo5EU_KRXxlJWO2Agl1c",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"requiredDocuments\": [\"Income Certificate\", \"Caste Certificate\"],\r\n  \"deadline\": \"2026-03-10\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/inspector/:applicationId/request-documents?",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "inspector",
+            ":applicationId",
+            "request-documents"
+          ],
+          "query": [
+            {
+              "key": "",
+              "value": null
+            }
+          ],
+          "variable": [
+            {
+              "key": "applicationId",
+              "value": "69a0a239392548ddb34b5bd0"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Assigned Application as SuperVisor",
+      "id": "67d0c441-4327-4102-a77f-1f7e96caadca",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWE1ZWZlNmIzMTFkZjMyYTVkMGZhZDAiLCJyb2xlIjoiU1VQRVJWSVNPUiIsImlhdCI6MTc3MjQ4MzY3MywiZXhwIjoxNzcyNDg0NTczfQ.ME5E0-cm0RZCNoGjCOaqnCb5FuKEwcsyvY4BzafBooQ",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:5000/api/supervisor/my-applications",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "supervisor",
+            "my-applications"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Disburse Tranche(Supervisor work)",
+      "id": "c0203b72-b0e3-4a1e-97c9-286c04841fbd",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWE1ZWZlNmIzMTFkZjMyYTVkMGZhZDAiLCJyb2xlIjoiU1VQRVJWSVNPUiIsImlhdCI6MTc3MjQ4NTY4MiwiZXhwIjoxNzcyNDg2NTgyfQ.Kp7ZNRsMOpTkEarBXS-Q0IGqNYiGQg1tgSSwhaNQYps",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"amount\": 25000,\r\n  \"disbursedDate\": \"2026-03-01\",\r\n  \"transactionReference\": \"TXN123456\",\r\n  \"comments\": \"First tranche disbursed\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/supervisor/:applicationId/disburse",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "supervisor",
+            ":applicationId",
+            "disburse"
+          ],
+          "variable": [
+            {
+              "key": "applicationId",
+              "value": "69a0a239392548ddb34b5bd0"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Tranche History(Supervisor work)",
+      "id": "dbb51f3f-4564-4ef5-a7f2-c82bf3031b14",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWE1ZWZlNmIzMTFkZjMyYTVkMGZhZDAiLCJyb2xlIjoiU1VQRVJWSVNPUiIsImlhdCI6MTc3MjQ4NjQ4OCwiZXhwIjoxNzcyNDg3Mzg4fQ.PCd8wlr1H4S4CrfrgPLm_LwgkrdiR80nH4JEGbNrc9w",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/supervisor/:applicationId/tranches",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "supervisor",
+            ":applicationId",
+            "tranches"
+          ],
+          "variable": [
+            {
+              "key": "applicationId",
+              "value": "69a0a239392548ddb34b5bd0"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Supervisor Dashboard",
+      "id": "9d6ac5b0-5966-4edb-bdad-8d8013824ae5",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWE1ZWZlNmIzMTFkZjMyYTVkMGZhZDAiLCJyb2xlIjoiU1VQRVJWSVNPUiIsImlhdCI6MTc3MjQ4NjA3NiwiZXhwIjoxNzcyNDg2OTc2fQ.v_-Y18G4Pbvg9SoMIcuh-ZNPRfypvhukRHZqC-LaZZw",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/supervisor/dashboard",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "supervisor",
+            "dashboard"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "HO Dashboard",
+      "id": "5cfb81b4-16c2-48d6-8354-8dd6695eb1c4",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWEzMzY0OTUxYzY3MGZlZjY5NzU5ZjIiLCJyb2xlIjoiSE8iLCJpYXQiOjE3NzI1OTMzNjcsImV4cCI6MTc3MjU5NDI2N30.Du_8OqW2lEXsJ6FpkT_cSB6TE2d76Bg52oJ6WOaX9Rw",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:5000/api/ho/dashboard",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "ho",
+            "dashboard"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Visit Report: as HO",
+      "id": "8d3426f6-8589-4679-a4a9-a4ced24294c2",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWEzMzY0OTUxYzY3MGZlZjY5NzU5ZjIiLCJyb2xlIjoiSE8iLCJpYXQiOjE3NzI1OTM3NjUsImV4cCI6MTc3MjU5NDY2NX0.Am6EmIJGcyVEJKiggHNHm02uqvp4hmFH4QGHO-R9egk",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:5000/api/ho/:applicationId/visit-report",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "ho",
+            ":applicationId",
+            "visit-report"
+          ],
+          "variable": [
+            {
+              "key": "applicationId",
+              "value": "69a0a239392548ddb34b5bd0"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Inspector list as HO",
+      "id": "2a6d08ec-d455-4770-96aa-1f203a5acb1b",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OWEzMzY0OTUxYzY3MGZlZjY5NzU5ZjIiLCJyb2xlIjoiSE8iLCJpYXQiOjE3NzI1OTQzMjQsImV4cCI6MTc3MjU5NTIyNH0.T-bMXwIDkPacAhEQMxcihjIDqxSzIO4Gx3D34gzkdk0",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:5000/api/ho/inspectors/list",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "ho",
+            "inspectors",
+            "list"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
