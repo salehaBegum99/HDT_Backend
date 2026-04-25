@@ -1,61 +1,46 @@
-const mongoose = require("mongoose");
+const { DataTypes } = require('sequelize');
+const sequelize = require('../Config/database');
+const User = require('./User');
 
-const applicantSchema = new mongoose.Schema(
-  {
-    userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User", // Links to User model
-      required: true,
-    },
-    candidateId: {
-      type: String,
-      unique: true, // SCH20260001
-    },
-    aadhaarMasked: {
-      type: String, // Stores XXXX-XXXX-1234
-      required: true,
-    },
-    aadhaarHash: {
-      type: String, // Hashed full aadhaar to detect duplicates
-      unique: true,
-    },
-    dateOfBirth: {
-      type: Date,
-      required: true,
-    },
-    gender: {
-      type: String,
-      enum: ["MALE", "FEMALE", "OTHER"],
-      required: true,
-    },
-  //   address: {
-  //     street: String,
-  //     city: String,
-  //     state: String,
-  //     pincode: String,
-  //   },
-  //   schoolName: {
-  //     type: String,
-  //     required: true,
-  //   },
-  //   className: {
-  //     type: String,
-  //     required: true,
-  //   },
-  //   parentName: {
-  //     type: String,
-  //     required: true,
-  //   },
-  //   parentMobile: {
-  //     type: String,
-  //     required: true,
-  //   },
-  //   annualIncome: {
-  //     type: Number,
-  //     required: true,
-  //   },
+const Applicant = sequelize.define('Applicant', {
+  id: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true,
   },
-  { timestamps: true },
-);
+  userId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    references: { model: 'users', key: 'id' },
+  },
+  candidateId: {
+    type: DataTypes.STRING,
+    unique: true,
+    allowNull: false,
+  },
+  aadhaarMasked: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  aadhaarHash: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  dateOfBirth: {
+    type: DataTypes.DATEONLY,
+    allowNull: true,
+  },
+  gender: {
+    type: DataTypes.ENUM('MALE','FEMALE','OTHER'),
+    allowNull: true,
+  },
+}, {
+  tableName: 'applicants',
+  timestamps: true,
+});
 
-module.exports = mongoose.model("Applicant", applicantSchema);
+// Association
+Applicant.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+User.hasOne(Applicant, { foreignKey: 'userId', as: 'applicant' });
+
+module.exports = Applicant;

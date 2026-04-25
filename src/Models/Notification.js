@@ -1,20 +1,34 @@
-const mongoose = require('mongoose');
+const { DataTypes } = require('sequelize');
+const sequelize = require('../Config/database');
+const User = require('./User');
 
-const notificationSchema = new mongoose.Schema({
+const Notification = sequelize.define('Notification', {
+  id: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true,
+  },
   userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
+    type: DataTypes.UUID,
+    allowNull: false,
+    references: { model: 'users', key: 'id' },
   },
-  title:   { type: String, required: true },
-  message: { type: String, required: true },
+  title:   { type: DataTypes.STRING, allowNull: false },
+  message: { type: DataTypes.TEXT,   allowNull: false },
   type: {
-    type: String,
-    enum: ['STATUS_CHANGE', 'INSPECTOR_ASSIGNED', 'DOCUMENT_REQUESTED', 'PAYMENT_DISBURSED', 'GENERAL'],
-    default: 'GENERAL',
+    type: DataTypes.ENUM(
+      'STATUS_CHANGE','INSPECTOR_ASSIGNED',
+      'DOCUMENT_REQUESTED','PAYMENT_DISBURSED','GENERAL'
+    ),
+    defaultValue: 'GENERAL',
   },
-  isRead:  { type: Boolean, default: false },
-  link:    { type: String, default: null }, // e.g. /dashboard
-}, { timestamps: true });
+  isRead: { type: DataTypes.BOOLEAN, defaultValue: false },
+  link:   { type: DataTypes.STRING,  allowNull: true },
+}, {
+  tableName: 'notifications',
+  timestamps: true,
+});
 
-module.exports = mongoose.model('Notification', notificationSchema);
+Notification.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+
+module.exports = Notification;

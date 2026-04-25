@@ -1,74 +1,42 @@
-const mongoose = require("mongoose");
+const { DataTypes } = require('sequelize');
+const sequelize = require('../Config/database');
+const User = require('./User');
+const Application = require('./Application');
 
-const trancheSchema = new mongoose.Schema(
-  {
-    // Which application
-    applicationId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Application",
-      required: true,
-    },
-
-    // Which supervisor disbursed
-    supervisorId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
-
-    // Tranche Details
-    trancheNumber: {
-      type: Number,
-      required: true, // 1, 2, 3...
-    },
-
-    amount: {
-      type: Number,
-      required: true,
-    },
-
-    disbursedDate: {
-      type: Date,
-      required: true,
-    },
-
-    // Payment Evidence
-    paymentEvidence: {
-      type: String, // File path
-      default: null,
-    },
-
-    // Payment reference
-    transactionReference: {
-      type: String,
-      default: null,
-    },
-
-    // Status
-    status: {
-      type: String,
-      enum: ["PENDING", "DISBURSED", "ON_HOLD"],
-      default: "DISBURSED",
-    },
-
-    // Supervisor comments
-    comments: {
-      type: String,
-      default: null,
-    },
-
-    // Flag for issues
-    isFlagged: {
-      type: Boolean,
-      default: false,
-    },
-
-    flagReason: {
-      type: String,
-      default: null,
-    },
+const Tranche = sequelize.define('Tranche', {
+  id: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true,
   },
-  { timestamps: true },
-);
+  applicationId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    references: { model: 'applications', key: 'id' },
+  },
+  supervisorId: {
+    type: DataTypes.UUID,
+    allowNull: true,
+    references: { model: 'users', key: 'id' },
+  },
+  trancheNumber:        { type: DataTypes.INTEGER },
+  amount:               { type: DataTypes.DECIMAL(10,2) },
+  disbursedDate:        { type: DataTypes.DATEONLY, allowNull: true },
+  paymentEvidence:      { type: DataTypes.STRING,  allowNull: true },
+  transactionReference: { type: DataTypes.STRING,  allowNull: true },
+  status: {
+    type: DataTypes.ENUM('PENDING','DISBURSED','ON_HOLD'),
+    defaultValue: 'PENDING',
+  },
+  comments:   { type: DataTypes.TEXT,    allowNull: true },
+  isFlagged:  { type: DataTypes.BOOLEAN, defaultValue: false },
+  flagReason: { type: DataTypes.TEXT,    allowNull: true },
+}, {
+  tableName: 'tranches',
+  timestamps: true,
+});
 
-module.exports = mongoose.model("Tranche", trancheSchema);
+Tranche.belongsTo(Application, { foreignKey: 'applicationId' });
+Tranche.belongsTo(User, { foreignKey: 'supervisorId', as: 'supervisor' });
+
+module.exports = Tranche;

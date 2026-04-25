@@ -1,59 +1,35 @@
-const mongoose = require("mongoose");
+const { DataTypes } = require('sequelize');
+const sequelize = require('../Config/database');
+const User = require('./User');
+const Application = require('./Application');
 
-const visitReportSchema = new mongoose.Schema(
-  {
-    // Which application
-    applicationId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Application",
-      required: true,
-    },
-
-    // Which inspector submitted
-    inspectorId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
-
-    // Visit Details
-    visitDate: {
-      type: Date,
-      required: true,
-    },
-
-    // Inspector comments
-    comments: {
-      type: String,
-      required: true,
-    },
-
-    // Evidence photos
-    photos: [
-      {
-        type: String, // File paths
-      },
-    ],
-
-    // Verification decision
-    isVerified: {
-      type: Boolean,
-      required: true,
-    },
-
-    // If not verified → why?
-    rejectionReason: {
-      type: String,
-      default: null,
-    },
-
-    // Tranche number (for follow up visits)
-    trancheNumber: {
-      type: Number,
-      default: 1,
-    },
+const VisitReport = sequelize.define('VisitReport', {
+  id: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true,
   },
-  { timestamps: true },
-);
+  applicationId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    references: { model: 'applications', key: 'id' },
+  },
+  inspectorId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    references: { model: 'users', key: 'id' },
+  },
+  visitDate:       { type: DataTypes.DATEONLY, allowNull: false },
+  comments:        { type: DataTypes.TEXT,     allowNull: false },
+  isVerified:      { type: DataTypes.BOOLEAN,  defaultValue: true },
+  rejectionReason: { type: DataTypes.TEXT,     allowNull: true },
+  trancheNumber:   { type: DataTypes.INTEGER,  allowNull: true },
+}, {
+  tableName: 'visit_reports',
+  timestamps: true,
+});
 
-module.exports = mongoose.model("VisitReport", visitReportSchema);
+VisitReport.belongsTo(Application, { foreignKey: 'applicationId' });
+VisitReport.belongsTo(User,        { foreignKey: 'inspectorId', as: 'inspector' });
+
+module.exports = VisitReport;

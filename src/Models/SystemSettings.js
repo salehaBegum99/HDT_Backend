@@ -1,42 +1,44 @@
-const mongoose = require("mongoose");
+const { DataTypes } = require('sequelize');
+const sequelize = require('../Config/database');
 
-const systemSettingsSchema = new mongoose.Schema(
-  {
-    // Tranche Rules
-    defaultTotalTranches: {
-      type: Number,
-      default: 3,
-    },
-
-    maxScholarshipAmount: {
-      type: Number,
-      default: 100000,
-    },
-
-    minScholarshipAmount: {
-      type: Number,
-      default: 10000,
-    },
-
-    // Document Retention
-    documentRetentionDays: {
-      type: Number,
-      default: 365, // 1 year
-    },
-
-    // Application Rules
-    applicationDeadline: {
-      type: Date,
-      default: null,
-    },
-
-    // Last updated by
-    updatedBy: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
+const SystemSettings = sequelize.define('SystemSettings', {
+  id: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true,
   },
-  { timestamps: true },
-);
+  defaultTotalTranches: {
+    type: DataTypes.INTEGER,
+    defaultValue: 3,
+    allowNull: false,
+  },
+  maxScholarshipAmount: {
+    type: DataTypes.DECIMAL(12, 2),
+    defaultValue: 100000.00,
+    allowNull: false,
+  },
+  minScholarshipAmount: {
+    type: DataTypes.DECIMAL(12, 2),
+    defaultValue: 10000.00,
+    allowNull: false,
+  },
+  documentRetentionDays: {
+    type: DataTypes.INTEGER,
+    defaultValue: 365,
+    allowNull: false,
+  },
+  applicationDeadline: {
+    type: DataTypes.DATEONLY,
+    allowNull: true,
+  },
+  updatedBy: {
+    type: DataTypes.UUID,
+    allowNull: true,
+    references: { model: 'users', key: 'id' },
+  },
+}, {
+  tableName: 'system_settings',
+  timestamps: true,
+});
 
-module.exports = mongoose.model("SystemSettings", systemSettingsSchema);
+module.exports = SystemSettings;

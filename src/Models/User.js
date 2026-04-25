@@ -1,52 +1,61 @@
-const mongoose = require("mongoose");
+const { DataTypes } = require('sequelize');
+const sequelize = require('../Config/database');
 
-const userSchema = new mongoose.Schema(
-  {
-    name: {
-      type: String,
-      required: true,
-    },
-    email: {
-      type: String,
-      unique: true,
-      sparse: true, // Not mandatory for applicants
-    },
-    mobile: {
-      type: String,
-      required: true,
-      unique: true,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
-    role: {
-      type: String,
-      enum: ["APPLICANT", "INSPECTOR", "SUPERVISOR", "HO", "SUPERADMIN"],
-      required: true,
-    },
-    isActive: {
-      type: Boolean,
-      default: true, // SuperAdmin can deactivate users
-    },
-    isMobileVerified: {
-      type: Boolean,
-      default: false, // Only becomes true after OTP
-    },
-
-    // Replace assignedArea + assignedDistrict with just:
-assignedArea: {
-  type: String,
-  default: null,
-},
-// Add for Supervisor:
-sponsorOrg: {
-  type: String,
-  default: null,
-},
-    refreshToken: { type: String, default: null },
+const User = sequelize.define('User', {
+  id: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true,
   },
-  { timestamps: true },
-); // Adds createdAt, updatedAt automatically
-const user = mongoose.model("User", userSchema);
-module.exports = user;
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  email: {
+    type: DataTypes.STRING,
+    unique: true,
+    allowNull: true,
+  },
+  mobile: {
+    type: DataTypes.STRING(10),
+    unique: true,
+    allowNull: false,
+  },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  role: {
+    type: DataTypes.ENUM('APPLICANT','INSPECTOR','SUPERVISOR','HO','SUPERADMIN'),
+    allowNull: false,
+  },
+  isActive: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: true,
+  },
+  isMobileVerified: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
+  isFirstLogin: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: true,
+  },
+  refreshToken: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
+  assignedArea: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  sponsorOrg: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+}, {
+  tableName: 'users',
+  timestamps: true,
+});
+
+module.exports = User;
