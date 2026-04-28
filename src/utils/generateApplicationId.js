@@ -1,11 +1,16 @@
+// ✅ Fixed — Sequelize version
+const { Op } = require('sequelize');
+
 const generateApplicationId = async (Application, candidateId) => {
   const year = new Date().getFullYear();
-  
-  // Count existing applications this year to generate serial
-  const count = await Application.countDocuments({
-    createdAt: {
-      $gte: new Date(`${year}-01-01`),
-      $lte: new Date(`${year}-12-31`)
+
+  // ✅ Sequelize: count() with Op.between instead of countDocuments
+  const count = await Application.count({
+    where: {
+      createdAt: {
+        [Op.gte]: new Date(`${year}-01-01`),
+        [Op.lte]: new Date(`${year}-12-31`),
+      }
     }
   });
 

@@ -1,20 +1,19 @@
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 
-// Generate Access Token → short lived (15 mins)
-const generateAccessToken = (userId, role) => {
+// ✅ Added name parameter
+const generateAccessToken = (userId, role, name) => {
   return jwt.sign(
-    { userId, role }, // What we store inside token
-    process.env.JWT_SECRET, // Secret key to sign it
-    { expiresIn: "15m" }, // Expires in 15 minutes
+    { userId, role, name },       // ← Add name
+    process.env.JWT_SECRET,
+    { expiresIn: '15m' },
   );
 };
 
-// Generate Refresh Token → long lived (30 days)
 const generateRefreshToken = (userId) => {
   return jwt.sign(
     { userId },
-    process.env.JWT_REFRESH_SECRET, // Different secret for refresh
-    { expiresIn: "30d" },
+    process.env.JWT_REFRESH_SECRET,
+    { expiresIn: '30d' },
   );
 };
 
