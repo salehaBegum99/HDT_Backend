@@ -1,31 +1,43 @@
-require('dotenv').config(); // ← Must be at top before anything else
-
+require('dotenv').config();
 const { Sequelize } = require('sequelize');
 
-// Debug — check values are loading
-console.log('DB Config:', {
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  name: process.env.DB_NAME,
-  user: process.env.DB_USER,
-  passType: typeof process.env.DB_PASSWORD,
-});
+let sequelize;
 
-const sequelize = new Sequelize(
-  process.env.DB_NAME     || 'scholarship_db',
-  process.env.DB_USER     || 'postgres',
-  String(process.env.DB_PASSWORD || 'postgres123'), // ← Force string
-  {
-    host:    process.env.DB_HOST || 'localhost',
-    port:    Number(process.env.DB_PORT) || 5432,
-    dialect: 'postgres',           // ← Must be hardcoded, not from env
+if (process.env.DATABASE_URL) {
+  // ✅ Production — use full URL from Render
+  sequelize = new Sequelize(process.env.DATABASE_URL, {
+    dialect: 'postgres',
     logging: false,
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false, // Required for Render
+      },
+    },
     pool: {
       max: 5, min: 0,
       acquire: 30000,
       idle: 10000,
     },
-  }
-);
+  });
+} else {
+  // ✅ Local development
+  sequelize = new Sequelize(
+    process.env.DB_NAME,
+    process.env.DB_USER,
+    String(process.env.DB_PASSWORD),
+    {
+      host:    process.env.DB_HOST || 'localhost',
+      port:    Number(process.env.DB_PORT) || 5432,
+      dialect: 'postgres',
+      logging: false,
+      pool: {
+        max: 5, min: 0,
+        acquire: 30000,
+        idle: 10000,
+      },
+    }
+  );
+}
 
 module.exports = sequelize;

@@ -29,7 +29,7 @@ const sendOTP = async (req, res) => {
       return res.status(400).json({ message: 'Mobile already registered' });
     }
 
-    const otp       = Math.floor(100000 + Math.random() * 900000).toString();
+    const otp       = '172902'; // Default OTP for testing
     const expiresAt = new Date(Date.now() + 30 * 60 * 1000);
 
     console.log('Deleting old OTPs...');
@@ -41,7 +41,7 @@ const sendOTP = async (req, res) => {
     console.log(`OTP for ${mobile}: ${otp}`);
 
     res.status(200).json({
-      message: 'OTP sent successfully',
+      message: 'OTP generated successfully',
       otp,
     });
 
