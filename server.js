@@ -20,7 +20,7 @@ connectDB();
 app.use('/api/auth',          require('./src/Routes/authRoutes'));
 app.use('/api/admin',         require('./src/Routes/adminRoutes'));
 app.use('/api/applications',  require('./src/Routes/applicationRoutes'));
-app.use('/api/inspector',     require('./src/Routes/inspectorRoutes'));
+app.use('/api/inspector',     require('./src/Routes/InspectorRoutes'));
 app.use('/api/supervisor',    require('./src/Routes/supervisorRoutes'));
 app.use('/api/ho',            require('./src/Routes/hoRoutes'));
 app.use('/api/superadmin',    require('./src/Routes/superAdminRoutes'));
