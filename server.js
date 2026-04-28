@@ -6,14 +6,17 @@ const connectDB = require('./src/Config/db');
 const app = express();
 
 app.use(cors({
-  origin: [
+   origin: [
     'http://localhost:5173',
     'http://localhost:3000',
-    process.env.FRONTEND_URL, // Vercel URL
-  ].filter(Boolean),
+    'https://hdt-frontend-cloz.vercel.app',
+    /\.vercel\.app$/,
+  ],
   credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
-
+// app.options('*', cors());
 app.use(express.json());
 connectDB();
 
