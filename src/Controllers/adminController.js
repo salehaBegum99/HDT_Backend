@@ -24,13 +24,13 @@ const createUser = async (req, res) => {
     }
 
     // 3. Check email not already used
-    const emailExists = await User.findOne({ email });
+    const emailExists = await User.findOne({ where: { email } });
     if (emailExists) {
       return res.status(400).json({ message: "Email already registered" });
     }
 
     // 4. Check mobile not already used
-    const mobileExists = await User.findOne({ mobile });
+    const mobileExists = await User.findOne({ where: { mobile } });
     if (mobileExists) {
       return res.status(400).json({ message: "Mobile already registered" });
     }
@@ -99,7 +99,7 @@ const deactivateUser = async (req, res) => {
   try {
     const { userId } = req.params;
 
-    const user = await User.findById(userId);
+    const user = await User.findByPk(userId);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
