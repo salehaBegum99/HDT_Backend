@@ -53,9 +53,16 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: true,
   },
-}, {
+  
+},
+
+{
   tableName: 'users',
   timestamps: true,
+  isFirstLogin: {
+  type: Boolean,
+  default: true  // Forces password change on first login
+}
 });
 
 module.exports = User;

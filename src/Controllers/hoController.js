@@ -1,38 +1,35 @@
-const Application = require("../Models/Application");
-const VisitReport = require("../Models/InspectorVisitreport");
-const Tranche = require("../Models/Tranche");
-const User = require("../Models/User");
+const { Op, literal } = require('sequelize');
+const Application  = require('../Models/Application');
+const VisitReport  = require('../Models/InspectorVisitreport');
+const Tranche      = require('../Models/Tranche');
+const User         = require('../Models/User');
 
 // ─────────────────────────────────────────
 // DASHBOARD STATS
 // ─────────────────────────────────────────
 const getDashboardStats = async (req, res) => {
   try {
-    const total = await Application.countDocuments();
-    const submitted = await Application.countDocuments({ status: "SUBMITTED" });
-    const assigned = await Application.countDocuments({ status: "ASSIGNED" });
-    const inspected = await Application.countDocuments({ status: "INSPECTED" });
-    const approved = await Application.countDocuments({ status: "APPROVED" });
-    const rejected = await Application.countDocuments({ status: "REJECTED" });
-    const disbursed = await Application.countDocuments({ status: "DISBURSED" });
-    const flagged = await Application.countDocuments({ isFlagged: true });
-    const unassigned = await Application.countDocuments({
-      assignedInspector: null,
-    });
+    const [
+      total, submitted, assigned, inspected,
+      approved, rejected, disbursed, flagged, unassigned
+    ] = await Promise.all([
+      Application.count(),
+      Application.count({ where: { status: 'SUBMITTED' } }),
+      Application.count({ where: { status: 'ASSIGNED' } }),
+      Application.count({ where: { status: 'INSPECTED' } }),
+      Application.count({ where: { status: 'APPROVED' } }),
+      Application.count({ where: { status: 'REJECTED' } }),
+      Application.count({ where: { status: 'DISBURSED' } }),
+      Application.count({ where: { isFlagged: true } }),
+      Application.count({ where: { assignedInspector: null } }),
+    ]);
 
     res.status(200).json({
-      total,
-      submitted,
-      assigned,
-      inspected,
-      approved,
-      rejected,
-      disbursed,
-      flagged,
-      unassigned,
+      total, submitted, assigned, inspected,
+      approved, rejected, disbursed, flagged, unassigned,
     });
   } catch (error) {
-    res.status(500).json({ message: "Server error", error: error.message });
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
 
@@ -44,45 +41,51 @@ const searchApplications = async (req, res) => {
     const { query } = req.query;
 
     if (!query) {
-      return res.status(400).json({ message: "Search query is required" });
+      return res.status(400).json({ message: 'Search query is required' });
     }
 
-    // Search by candidateId or school name
-    const applications = await Application.find({
-      $or: [
-        { candidateId: { $regex: query, $options: "i" } },
-        { "academic.schoolName": { $regex: query, $options: "i" } },
+    // ✅ Search by candidateId using Op.iLike (case insensitive in PostgreSQL)
+    const byId = await Application.findAll({
+      where: {
+        candidateId: { [Op.iLike]: `%${query}%` }
+      },
+      include: [
+        { model: User, as: 'applicant',  attributes: ['name','mobile','email'] },
+        { model: User, as: 'inspector',  attributes: ['name','email'] },
+        { model: User, as: 'supervisor', attributes: ['name','email'] },
       ],
-    })
-      .populate("applicantId", "name mobile email")
-      .populate("assignedInspector", "name email")
-      .populate("assignedSupervisor", "name email");
-
-    // Also search by applicant name
-    const userMatches = await User.find({
-      name: { $regex: query, $options: "i" },
-      role: "APPLICANT",
     });
 
-    const userIds = userMatches.map((u) => u._id);
-    const byApplicantName = await Application.find({
-      applicantId: { $in: userIds },
-    }).populate("applicantId", "name mobile email");
+    // ✅ Search by applicant name
+    const matchingUsers = await User.findAll({
+      where: {
+        name: { [Op.iLike]: `%${query}%` },
+        role: 'APPLICANT',
+      },
+      attributes: ['id'],
+    });
 
-    // Combine and deduplicate results
-    const allResults = [...applications, ...byApplicantName];
+    const userIds = matchingUsers.map(u => u.id);
+
+    const byName = userIds.length > 0 ? await Application.findAll({
+      where: { applicantId: { [Op.in]: userIds } },
+      include: [
+        { model: User, as: 'applicant',  attributes: ['name','mobile','email'] },
+        { model: User, as: 'inspector',  attributes: ['name','email'] },
+        { model: User, as: 'supervisor', attributes: ['name','email'] },
+      ],
+    }) : [];
+
+    // Combine and deduplicate
+    const allResults = [...byId, ...byName];
     const unique = allResults.filter(
       (app, index, self) =>
-        index ===
-        self.findIndex((a) => a._id.toString() === app._id.toString()),
+        index === self.findIndex(a => a.id === app.id)
     );
 
-    res.status(200).json({
-      total: unique.length,
-      applications: unique,
-    });
+    res.status(200).json({ total: unique.length, applications: unique });
   } catch (error) {
-    res.status(500).json({ message: "Server error", error: error.message });
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
 
@@ -93,20 +96,21 @@ const getVisitReport = async (req, res) => {
   try {
     const { applicationId } = req.params;
 
-    const report = await VisitReport.findOne({ applicationId }).populate(
-      "inspectorId",
-      "name email mobile",
-    );
+    // ✅ Sequelize: findOne with where + include
+    const report = await VisitReport.findOne({
+      where: { applicationId },
+      include: [
+        { model: User, as: 'inspector', attributes: ['name','email','mobile'] }
+      ],
+    });
 
     if (!report) {
-      return res.status(404).json({
-        message: "No visit report found",
-      });
+      return res.status(404).json({ message: 'No visit report found' });
     }
 
     res.status(200).json({ report });
   } catch (error) {
-    res.status(500).json({ message: "Server error", error: error.message });
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
 
@@ -117,11 +121,18 @@ const getDisbursementRecords = async (req, res) => {
   try {
     const { applicationId } = req.params;
 
-    const tranches = await Tranche.find({ applicationId })
-      .populate("supervisorId", "name email")
-      .sort({ trancheNumber: 1 });
+    // ✅ Sequelize: findAll with where + include + order
+    const tranches = await Tranche.findAll({
+      where: { applicationId },
+      include: [
+        { model: User, as: 'supervisor', attributes: ['name','email'] }
+      ],
+      order: [['trancheNumber', 'ASC']],
+    });
 
-    const totalDisbursed = tranches.reduce((sum, t) => sum + t.amount, 0);
+    const totalDisbursed = tranches.reduce(
+      (sum, t) => sum + parseFloat(t.amount || 0), 0
+    );
 
     res.status(200).json({
       totalDisbursed,
@@ -129,12 +140,12 @@ const getDisbursementRecords = async (req, res) => {
       tranches,
     });
   } catch (error) {
-    res.status(500).json({ message: "Server error", error: error.message });
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
 
 // ─────────────────────────────────────────
-// ADD HO INTERNAL NOTES
+// ADD HO NOTES
 // ─────────────────────────────────────────
 const addHONotes = async (req, res) => {
   try {
@@ -142,23 +153,21 @@ const addHONotes = async (req, res) => {
     const { notes } = req.body;
 
     if (!notes) {
-      return res.status(400).json({ message: "Notes cannot be empty" });
+      return res.status(400).json({ message: 'Notes cannot be empty' });
     }
 
-    const application = await Application.findById(applicationId);
+    // ✅ Sequelize: findByPk
+    const application = await Application.findByPk(applicationId);
     if (!application) {
-      return res.status(404).json({ message: "Application not found" });
+      return res.status(404).json({ message: 'Application not found' });
     }
 
-    application.hoNotes = notes;
-    await application.save();
+    // ✅ Sequelize: update()
+    await application.update({ hoNotes: notes });
 
-    res.status(200).json({
-      message: "HO notes added successfully ✅",
-      notes,
-    });
+    res.status(200).json({ message: 'HO notes added successfully ✅', notes });
   } catch (error) {
-    res.status(500).json({ message: "Server error", error: error.message });
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
 
@@ -172,38 +181,35 @@ const triggerTrancheRelease = async (req, res) => {
 
     if (!totalTranches || !approvedAmount) {
       return res.status(400).json({
-        message: "Total tranches and approved amount are required",
+        message: 'Total tranches and approved amount are required',
       });
     }
 
-    const application = await Application.findById(applicationId);
+    const application = await Application.findByPk(applicationId);
     if (!application) {
-      return res.status(404).json({ message: "Application not found" });
+      return res.status(404).json({ message: 'Application not found' });
     }
 
-    if (application.status !== "APPROVED") {
-      return res.status(400).json({
-        message: "Application must be approved first",
-      });
+    if (application.status !== 'APPROVED') {
+      return res.status(400).json({ message: 'Application must be approved first' });
     }
 
-    application.totalTranches = totalTranches;
-    application.approvedAmount = approvedAmount;
-    await application.save();
+    // ✅ Sequelize: update()
+    await application.update({ totalTranches, approvedAmount });
 
     res.status(200).json({
-      message: `Tranche release triggered ✅`,
+      message: 'Tranche release triggered ✅',
       totalTranches,
       approvedAmount,
       amountPerTranche: approvedAmount / totalTranches,
     });
   } catch (error) {
-    res.status(500).json({ message: "Server error", error: error.message });
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
 
 // ─────────────────────────────────────────
-// PAUSE / STOP TRANCHE RELEASE
+// PAUSE TRANCHE RELEASE
 // ─────────────────────────────────────────
 const pauseTrancheRelease = async (req, res) => {
   try {
@@ -211,33 +217,23 @@ const pauseTrancheRelease = async (req, res) => {
     const { reason } = req.body;
 
     if (!reason) {
-      return res.status(400).json({ message: "Reason is required" });
+      return res.status(400).json({ message: 'Reason is required' });
     }
 
-    // Find all pending tranches and put on hold
-    const tranches = await Tranche.updateMany(
-      {
-        applicationId,
-        status: "PENDING",
-      },
-      {
-        $set: {
-          status: "ON_HOLD",
-          comments: `Paused by HO: ${reason}`,
-        },
-      },
+    // ✅ Sequelize: update with where
+    await Tranche.update(
+      { status: 'ON_HOLD', comments: `Paused by HO: ${reason}` },
+      { where: { applicationId, status: 'PENDING' } }
     );
 
-    const application = await Application.findById(applicationId);
-    application.hoNotes = `Tranche paused: ${reason}`;
-    await application.save();
+    const application = await Application.findByPk(applicationId);
+    if (application) {
+      await application.update({ hoNotes: `Tranche paused: ${reason}` });
+    }
 
-    res.status(200).json({
-      message: "Tranche release paused ✅",
-      reason,
-    });
+    res.status(200).json({ message: 'Tranche release paused ✅', reason });
   } catch (error) {
-    res.status(500).json({ message: "Server error", error: error.message });
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
 
@@ -249,61 +245,60 @@ const reassignInspector = async (req, res) => {
     const { applicationId } = req.params;
     const { inspectorId } = req.body;
 
-    const application = await Application.findById(applicationId);
+    const application = await Application.findByPk(applicationId);
     if (!application) {
-      return res.status(404).json({ message: "Application not found" });
+      return res.status(404).json({ message: 'Application not found' });
     }
 
     const previousInspector = application.assignedInspector;
-    application.assignedInspector = inspectorId;
-    application.status = "ASSIGNED";
-    await application.save();
+
+    // ✅ Sequelize: update()
+    await application.update({
+      assignedInspector: inspectorId,
+      status: 'ASSIGNED',
+    });
 
     res.status(200).json({
-      message: "Inspector reassigned successfully ✅",
+      message: 'Inspector reassigned successfully ✅',
       previousInspector,
       newInspector: inspectorId,
     });
   } catch (error) {
-    res.status(500).json({ message: "Server error", error: error.message });
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
 
 // ─────────────────────────────────────────
-// GET ALL INSPECTORS (for dropdown)
+// GET ALL INSPECTORS
 // ─────────────────────────────────────────
 const getAllInspectors = async (req, res) => {
   try {
-    const inspectors = await User.find({
-      role: "INSPECTOR",
-      isActive: true,
-    }).select('name email assignedArea');
-
-    res.status(200).json({
-      total: inspectors.length,
-      inspectors,
+    // ✅ Sequelize: findAll with where + attributes
+    const inspectors = await User.findAll({
+      where: { role: 'INSPECTOR', isActive: true },
+      attributes: ['id', 'name', 'email', 'assignedArea'],
     });
+
+    res.status(200).json({ total: inspectors.length, inspectors });
   } catch (error) {
-    res.status(500).json({ message: "Server error", error: error.message });
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
 
 // ─────────────────────────────────────────
-// GET ALL SUPERVISORS (for dropdown)
+// GET ALL SUPERVISORS
 // ─────────────────────────────────────────
 const getAllSupervisors = async (req, res) => {
   try {
-    const supervisors = await User.find({
-      role: "SUPERVISOR",
-      isActive: true,
-    }).select('name email sponsorOrg');
-
-    res.status(200).json({
-      total: supervisors.length,
-      supervisors,
+    // ✅ Sequelize: findAll with where + attributes
+    const supervisors = await User.findAll({
+      where: { role: 'SUPERVISOR', isActive: true },
+      attributes: ['id', 'name', 'email', 'sponsorOrg'],
     });
+
+    res.status(200).json({ total: supervisors.length, supervisors });
   } catch (error) {
-    res.status(500).json({ message: "Server error", error: error.message });
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
 

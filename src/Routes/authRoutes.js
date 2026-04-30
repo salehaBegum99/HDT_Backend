@@ -7,6 +7,7 @@ const {
   login,
   refreshToken,
   logout,
+  changePassword
 } = require("../Controllers/auth.controller");
 const {
   verifyToken,
@@ -16,6 +17,7 @@ const {
 // OTP
 router.post("/send-otp", sendOTP);
 router.post("/verify-otp", verifyOTP);
+router.post('/change-password', verifyToken, changePassword);
 
 // Applicant Registration
 router.post("/register", registerApplicant);

@@ -1,6 +1,6 @@
 const User = require("../Models/User");
 const bcrypt = require("bcryptjs");
-
+const sendEmail = require('../utils/sendEmail');
 // ─────────────────────────────────────────
 // CREATE INTERNAL USER (SuperAdmin Only)
 // ─────────────────────────────────────────
@@ -56,8 +56,27 @@ const createUser = async (req, res) => {
 
     // 8. In production → send email/SMS with credentials
     // For now → return in response for testing
-    console.log(`Credentials for ${name}: ${email} / ${tempPassword}`);
-
+   /// console.log(`Credentials for ${name}: ${email} / ${tempPassword}`);
+await sendEmail({
+  to: email,
+  subject: 'Your Scholarship Portal Login Credentials',
+  html: `
+    <div style="font-family: Arial, sans-serif; max-width: 500px; margin: auto;">
+      <h2 style="color: #1d4ed8;">Scholarship Portal</h2>
+      <p>Hello <strong>${name}</strong>,</p>
+      <p>Your account has been created as <strong>${role}</strong>.</p>
+      <p>Here are your login credentials:</p>
+      <div style="background: #f3f4f6; padding: 16px; border-radius: 8px;">
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Password:</strong> ${tempPassword}</p>
+      </div>
+      <p style="color: #ef4444;">
+        Please login and change your password immediately.
+      </p>
+      <p>Login here: <a href="http://localhost:3000/login">Click here</a></p>
+    </div>
+  `
+});
     res.status(201).json({
       message: `${role} created successfully ✅`,
       user: {
