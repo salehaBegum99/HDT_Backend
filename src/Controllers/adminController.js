@@ -1,12 +1,12 @@
 const User = require("../Models/User");
 const bcrypt = require("bcryptjs");
-const sendEmail = require('../utils/sendEmail');
+const { Op } = require('sequelize');
 // ─────────────────────────────────────────
 // CREATE INTERNAL USER (SuperAdmin Only)
 // ─────────────────────────────────────────
 const createUser = async (req, res) => {
   try {
-    const { name, email, mobile, role,  assignedArea, sponsorOrg  } = req.body;
+    const { name, email, mobile, role, assignedArea, sponsorOrg, password } = req.body;
 
     // 1. Validate required fields
     if (!name || !email || !mobile || !role) {
@@ -35,9 +35,8 @@ const createUser = async (req, res) => {
       return res.status(400).json({ message: "Mobile already registered" });
     }
 
-    // 5. Auto generate temporary password
-    // Format: Name@RandomNumbers → Shoeb@4521
-    const tempPassword = `${name.split(" ")[0]}@${Math.floor(1000 + Math.random() * 9000)}`;
+    // 5. Use provided password, otherwise auto-generate one
+    const tempPassword = password || `${name.split(" ")[0]}@${Math.floor(1000 + Math.random() * 9000)}`;
 
     // 6. Hash the password
     const hashedPassword = await bcrypt.hash(tempPassword, 10);
@@ -49,34 +48,14 @@ const createUser = async (req, res) => {
       mobile,
       password: hashedPassword,
       role,
-     assignedArea: assignedArea || null, 
-      sponsorOrg:   sponsorOrg   || null,  
-      isFirstLogin: true, 
+      assignedArea: assignedArea || null,
+      sponsorOrg: sponsorOrg || null,
+      isFirstLogin: true,
     });
 
-    // 8. In production → send email/SMS with credentials
-    // For now → return in response for testing
-   /// console.log(`Credentials for ${name}: ${email} / ${tempPassword}`);
-await sendEmail({
-  to: email,
-  subject: 'Your Scholarship Portal Login Credentials',
-  html: `
-    <div style="font-family: Arial, sans-serif; max-width: 500px; margin: auto;">
-      <h2 style="color: #1d4ed8;">Scholarship Portal</h2>
-      <p>Hello <strong>${name}</strong>,</p>
-      <p>Your account has been created as <strong>${role}</strong>.</p>
-      <p>Here are your login credentials:</p>
-      <div style="background: #f3f4f6; padding: 16px; border-radius: 8px;">
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Password:</strong> ${tempPassword}</p>
-      </div>
-      <p style="color: #ef4444;">
-        Please login and change your password immediately.
-      </p>
-      <p>Login here: <a href="http://localhost:3000/login">Click here</a></p>
-    </div>
-  `
-});
+    // 8. Email is disabled for now. Later in v2 we will send credentials by email.
+    // console.log(`Credentials for ${name}: ${email} / ${tempPassword}`);
+
     res.status(201).json({
       message: `${role} created successfully ✅`,
       user: {
@@ -84,7 +63,7 @@ await sendEmail({
         email: user.email,
         mobile: user.mobile,
         role: user.role,
-        tempPassword, // Remove this in production!
+        tempPassword, // Show password for now; remove this in production
       },
     });
   } catch (error) {
@@ -128,9 +107,10 @@ const deactivateUser = async (req, res) => {
 const getAllUsers = async (req, res) => {
   try {
     // Never return passwords!
-    const users = await User.find({
-      role: { $ne: "APPLICANT" }, // Exclude applicants
-    }).select("-password -refreshToken");
+    const users = await User.findAll({
+      where: { role: { [Op.ne]: "APPLICANT" } }, // Exclude applicants
+      attributes: { exclude: ['password', 'refreshToken'] }
+    });
 
     res.status(200).json({
       total: users.length,

@@ -157,41 +157,29 @@ const reactivateUser = async (req, res) => {
 const resetUserPassword = async (req, res) => {
   try {
     const { userId } = req.params;
+    const { password } = req.body;
+
+    if (!userId || userId === 'undefined') {
+      return res.status(400).json({ message: 'Invalid userId parameter' });
+    }
 
     const user = await User.findByPk(userId);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    const tempPassword   = `${user.name.split(' ')[0]}@${Math.floor(1000 + Math.random() * 9000)}`;
-    const hashedPassword = await bcrypt.hash(tempPassword, 10);
+    const tempPassword = `${user.name.split(' ')[0]}@${Math.floor(1000 + Math.random() * 9000)}`;
+    const newPassword  = password || tempPassword;
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
 
     // ✅ Sequelize: update()
     await user.update({ password: hashedPassword, isFirstLogin: true });
 
-    try {
-      await sendEmail({
-        to: user.email,
-        subject: 'Password Reset - HDT Scholarship Portal',
-        html: `
-          <div style="font-family: Arial, sans-serif;">
-            <h2 style="color: #1d4ed8;">HDT Scholarship Portal</h2>
-            <p>Hello <strong>${user.name}</strong>,</p>
-            <p>Your password has been reset by the administrator.</p>
-            <div style="background: #f3f4f6; padding: 16px; border-radius: 8px;">
-              <p><strong>Email:</strong> ${user.email}</p>
-              <p><strong>New Password:</strong> ${tempPassword}</p>
-            </div>
-            <p style="color: #ef4444;">Please login and change your password immediately.</p>
-          </div>
-        `,
-      });
-    } catch (emailErr) {
-      console.log('Email error:', emailErr.message);
-    }
+    // Email is disabled for now. Later in v2 we will send reset credentials by email.
 
     res.status(200).json({
-      message: `Password reset successfully ✅ New credentials sent to ${user.email}`,
+      message: 'Password reset successfully ✅',
+      password: newPassword,
     });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });

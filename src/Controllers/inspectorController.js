@@ -85,7 +85,7 @@ const submitVisitReport = async (req, res) => {
 
     res.status(201).json({
       message: "Visit report submitted successfully ✅",
-      reportId: report._id,
+      reportId: report.id,
       isVerified: report.isVerified,
     });
   } catch (error) {

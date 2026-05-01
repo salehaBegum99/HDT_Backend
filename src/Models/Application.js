@@ -55,8 +55,21 @@ const Application = sequelize.define('Application', {
 });
 
 // Associations
-Application.belongsTo(User, { foreignKey: 'applicantId',        as: 'applicant' });
-Application.belongsTo(User, { foreignKey: 'assignedInspector',  as: 'inspector' });
-Application.belongsTo(User, { foreignKey: 'assignedSupervisor', as: 'supervisor' });
+
+
+Application.belongsTo(User, { 
+  foreignKey: 'applicantId',       
+  as: 'applicant'      // ← matches include: [{ as: 'applicant' }]
+});
+
+Application.belongsTo(User, { 
+  foreignKey: 'assignedInspector',  
+  as: 'inspector'      // ← matches include: [{ as: 'inspector' }]
+});
+
+Application.belongsTo(User, { 
+  foreignKey: 'assignedSupervisor', 
+  as: 'supervisor'     // ← matches include: [{ as: 'supervisor' }]
+});
 
 module.exports = Application;

@@ -36,7 +36,7 @@ const getVisitReport = async (req, res) => {
 
     // Check application is assigned to this supervisor
     const application = await Application.findOne({
-      _id: applicationId,
+      id: applicationId,
       assignedSupervisor: supervisorId,
     });
 
@@ -75,7 +75,7 @@ const disburseTranche = async (req, res) => {
 
     // 1. Find application
     const application = await Application.findOne({
-      _id: applicationId,
+      id: applicationId,
       assignedSupervisor: supervisorId,
     });
 
@@ -139,7 +139,7 @@ await createNotification(
 );
     res.status(201).json({
       message: `Tranche ${trancheNumber} disbursed successfully ✅`,
-      trancheId: tranche._id,
+      trancheId: tranche.id,
       trancheNumber,
       amount,
       remainingTranches: application.totalTranches - trancheNumber,
@@ -159,7 +159,7 @@ const getTrancheHistory = async (req, res) => {
 
     // Verify assignment
     const application = await Application.findOne({
-      _id: applicationId,
+      id: applicationId,
       assignedSupervisor: supervisorId,
     });
 
@@ -194,7 +194,7 @@ const addComments = async (req, res) => {
     const supervisorId = req.user.userId;
 
     const application = await Application.findOne({
-      _id: applicationId,
+      id: applicationId,
       assignedSupervisor: supervisorId,
     });
 
@@ -225,7 +225,7 @@ const requestFollowUpVisit = async (req, res) => {
     const supervisorId = req.user.userId;
 
     const application = await Application.findOne({
-      _id: applicationId,
+      id: applicationId,
       assignedSupervisor: supervisorId,
     });
 
@@ -290,7 +290,7 @@ const getTranchesDashboard = async (req, res) => {
       assignedSupervisor: supervisorId,
     });
 
-    const applicationIds = applications.map((app) => app._id);
+    const applicationIds = applications.map((app) => app.id);
 
     // Get all tranches for these applications
     const tranches = await Tranche.find({

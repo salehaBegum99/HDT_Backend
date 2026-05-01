@@ -9,13 +9,14 @@ const {
   assignInspector,
   assignSupervisor,
   flagApplication,
+   uploadDocuments
 } = require("../Controllers/applicationController");
 const {
   verifyToken,
   authorizeRoles,
 } = require("../Middleware/auth.middleware");
 const { upload } = require('../Config/Cloudinary');
-const { uploadDocuments } = require('../Controllers/applicationController');
+// const { uploadDocuments } = require('../Controllers/applicationController');
 
 // Upload documents separately
 router.post(
