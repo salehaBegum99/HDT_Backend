@@ -20,7 +20,7 @@ const getAssignedApplications = async (req, res) => {
       filter.status = "ASSIGNED";
     }
 
-    const applications = await Application.find(filter)
+    const applications = await Application.findAll(filter)
       .populate("applicantId", "name mobile email")
       .sort({ createdAt: -1 });
 

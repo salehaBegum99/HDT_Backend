@@ -10,7 +10,7 @@ const getAssignedApplications = async (req, res) => {
   try {
     const supervisorId = req.user.userId;
 
-    const applications = await Application.find({
+    const applications = await findAll({
       assignedSupervisor: supervisorId,
     })
       .populate("applicantId", "name mobile email")
@@ -286,7 +286,7 @@ const getTranchesDashboard = async (req, res) => {
     const supervisorId = req.user.userId;
 
     // Get all applications assigned to supervisor
-    const applications = await Application.find({
+    const applications = await Application.findAll({
       assignedSupervisor: supervisorId,
     });
 
